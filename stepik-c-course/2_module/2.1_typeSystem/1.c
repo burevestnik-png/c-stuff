@@ -14,3 +14,7 @@ size_t count_gt(uint_least32_t *array, size_t size) {
 
     return counter;
 }
+
+int main() {
+    return 0;
+}
