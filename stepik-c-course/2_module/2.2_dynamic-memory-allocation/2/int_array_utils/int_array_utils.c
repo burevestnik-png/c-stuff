@@ -43,6 +43,6 @@ void array_int_print(const int64_t *array, size_t size) {
 
 void array_size_print(const size_t *array, size_t size) {
     for (size_t i = 0; i < size; i = i + 1) {
-        printf("%zu", array[i]);
+        printf("%zu ", array[i]);
     }
 }

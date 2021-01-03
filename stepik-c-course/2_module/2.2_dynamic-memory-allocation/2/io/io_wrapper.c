@@ -21,6 +21,6 @@ int64_t read_int64() {
 }
 
 void print_int64(const int64_t value) {
-    printf("%" PRId64, value);
+    printf("%" PRId64 " ", value);
 }
 
