@@ -4,24 +4,9 @@
 #include <stdbool.h>
 
 int main() {
-    int64_t square(int64_t x) { return x * x; }
+    uint64_t x = 292;
 
-    int main() {
-
-        int64_t array[] = {1, 2, 3, 4, 5};
-
-        const size_t count = sizeof(array) / sizeof(array[0]);
-
-
-        // указатель на функцию int64_t -> int64_t
-
-        int64_t (*mapper)(int64_t) = &square;
-
-        for (size_t i = 0; i < count; i = i + 1) {
-            array[i] = mapper(array[i]);
-        }
-
-
-        return 0;
-    }
+    uint8_t *begin = (uint8_t *) &x;
+    printf("%s", &x);
+    printf("%s", begin);
 }

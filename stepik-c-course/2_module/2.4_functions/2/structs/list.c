@@ -1,17 +1,18 @@
 #include "list.h"
 #include <stdlib.h>
 #include <stdio.h>
-#include <inttypes.h>
+#include <stdint.h>
 
 #include "maybe_int.h"
 #include "../io/io.h"
+#include <inttypes.h>
 
 //#error Вставьте часть решения https://stepik.org/lesson/408350/step/8 содержащую нужные функции и исключая read_int64, maybe_int64_print и определение struct list.
 
 
 
 struct list *node_create(int64_t value) {
-    struct list *const list = malloc(sizeof(list));
+    struct list *const list = malloc(sizeof(struct list));
     *list = (struct list) {.value = value, .next = NULL};
     return list;
 }
