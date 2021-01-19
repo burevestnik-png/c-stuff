@@ -10,7 +10,11 @@
 
 ## About the project
 Что можно найти в этом репозитории:
-- [Хэшмапа][hashmap]
+
+- Мои решения [курса на степике про низкоуровневое программирование](https://github.com/burevestnik-png/c-stuff/tree/master/stepik-c-course)
+ на C
+- [Реализация hashMap](https://github.com/burevestnik-png/c-stuff/tree/master/hashmap-implementation) на
+основе полиномиального хеша
 
 [hashmap]: (https://github.com/burevestnik-png/c-stuff/tree/master/hashmap-implementation)
 [stepik]: (https://github.com/burevestnik-png/c-stuff/tree/master/stepik-c-course)
