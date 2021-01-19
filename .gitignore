@@ -2,3 +2,7 @@
 /cmake-build-debug/
 /.idea/
 /CMakeLists.txt
+
+main.c
+
+/hashmap-implementation/maps
