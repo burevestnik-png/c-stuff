@@ -8,6 +8,4 @@ main.c
 /hashmap-implementation/maps
 
 /image-rotation/build/
-image-rotation/print_header
-
-image-rotation/res/
+/image-rotation/print_header

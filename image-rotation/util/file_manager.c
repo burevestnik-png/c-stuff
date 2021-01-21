@@ -35,7 +35,7 @@ struct open_result open_file(const char* path, enum open_mode mode) {
 }
 
 enum close_status close_file(FILE *file) {
-    int result = fclose(file);
+    const int result = fclose(file);
 
     if (!result) {
         return CLOSE_OK;

@@ -2,9 +2,6 @@
 #include <stdbool.h>
 #include <malloc.h>
 
-// todo delete
-#include <errno.h>
-
 #include "bmp.h"
 #include "../util/file_manager.h"
 
@@ -37,25 +34,26 @@ static padding calculate_padding(const uint64_t width) {
 
 // По мотивам https://cdn.hackaday.io/files/274271173436768/Simplified%20Windows%20BMP%20Bitmap%20File%20Format%20Specification.htm
 static struct bmp_header bmp_header_init(const uint64_t width, const uint64_t height) {
-    uint32_t bOffBits = 138;
-
+    const padding p = calculate_padding(width);
+    const uint32_t bOffBits = 54;
     return (struct bmp_header) {
             .biWidth = width,
             .biHeight = height,
-            .bfType = 19778,
-            .bfileSize = bOffBits + height * (width + calculate_padding(width).value) * 3,
+            .bfileSize = bOffBits + height * (width + p.value) * 3 + p.value,
+            .biSizeImage = width * height * 3,
+            .bfType = 0x4d42,
             .bfReserved = 0,
             .bOffBits = bOffBits,
-            .biSize = 124,
+            .biSize = 40,
             .biPlanes = 1,
             .biBitCount = 24,
             .biCompression = 0,
-            .biSizeImage = width * height * 3,
             .biXPelsPerMeter = 0,
             .biYPelsPerMeter = 0,
             .biClrUsed = 0,
             .biClrImportant = 0
     };
+
 }
 
 bool read_header_from_file(const char *filename, struct bmp_header *header) {
@@ -107,20 +105,22 @@ enum read_status read_data(FILE *file, struct image *img) {
 }
 
 bool read_data_from_file(const char *filename, struct image *img) {
-    struct open_result open_result = open_file(filename, READ_BINARY);
+    print_warning("Started reading file");
+
+    const struct open_result open_result = open_file(filename, READ_BINARY);
     interpret_open_status(open_result.status);
     if (open_result.status != OPEN_OK) {
         return false;
     }
 
-    enum read_status read_status = read_data(open_result.file, img);
+    const enum read_status read_status = read_data(open_result.file, img);
     interpret_read_status(read_status);
     if (read_status != READ_OK) {
         close_file(open_result.file);
         return false;
     }
 
-    enum close_status close_status = close_file(open_result.file);
+    const enum close_status close_status = close_file(open_result.file);
     interpret_close_status(close_status);
     if (close_status != CLOSE_OK) {
         return false;
@@ -129,12 +129,12 @@ bool read_data_from_file(const char *filename, struct image *img) {
     return true;
 }
 
-static size_t skip_padding(const padding p, FILE* file) {
+static size_t skip_padding(const padding p, FILE *file) {
     return fwrite(&trash_byte, sizeof(trash_byte), p.value, file);
 }
 
 enum write_status write_data(FILE *file, const struct image *img) {
-    struct bmp_header header = bmp_header_init(img->width, img->height);
+    const struct bmp_header header = bmp_header_init(img->width, img->height);
     if (!fwrite(&header, sizeof(struct bmp_header), 1, file)) {
         return WRITE_HEADER_ERROR;
     }
@@ -152,22 +152,21 @@ enum write_status write_data(FILE *file, const struct image *img) {
 }
 
 bool write_data_to_file(const char *filename, struct image const *img) {
-    struct open_result open_result = open_file(filename, WRITE_BINARY);
+    print_warning("Started saving file");
+
+    const struct open_result open_result = open_file(filename, WRITE_BINARY);
     interpret_open_status(open_result.status);
     if (open_result.status != OPEN_OK) {
         return false;
     }
 
-    enum write_status write_status = write_data(open_result.file, img);
+    const enum write_status write_status = write_data(open_result.file, img);
     interpret_write_status(write_status);
-    // todo
-    printf("%u\n", write_status);
-    printf("%d\n", errno);
     if (write_status != WRITE_OK) {
         return false;
     }
 
-    enum close_status close_status = close_file(open_result.file);
+    const enum close_status close_status = close_file(open_result.file);
     interpret_close_status(close_status);
     if (close_status != CLOSE_OK) {
         return false;

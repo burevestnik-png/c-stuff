@@ -33,7 +33,7 @@ void print_warning(const char *msg) {
 }
 
 void print_info(const char *msg) {
-    printf("%s%s%s\n", GREEN, msg, RESET);
+    fprintf(stderr,"%s%s%s\n", GREEN, msg, RESET);
 }
 
 void print_error(const char *msg) {
