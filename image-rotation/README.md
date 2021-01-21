@@ -151,7 +151,7 @@ struct bmp_header
 
       ```c
       /* создаёт копию изображения, которая повёрнута на 90 градусов */
-      struct image rotate( struct image const source );
+      struct image image_rotate( struct image const source );
       ```
 
   Эти части имеет смысл держать **в разных модулях (файлах с расширением `.c`)**. Разумеется, для каждого нужен соответствующий заголовочный файл.
