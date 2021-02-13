@@ -15,6 +15,7 @@
  на C
 - [Реализация hashMap](https://github.com/burevestnik-png/c-stuff/tree/master/hashmap-implementation) на
 основе полиномиального хеша
+- [Реализация поворота картинки формата BMP](https://github.com/burevestnik-png/c-stuff/tree/master/image-rotation)
 
 [hashmap]: (https://github.com/burevestnik-png/c-stuff/tree/master/hashmap-implementation)
 [stepik]: (https://github.com/burevestnik-png/c-stuff/tree/master/stepik-c-course)
