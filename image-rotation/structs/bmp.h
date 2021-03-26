@@ -8,35 +8,6 @@
 #include "image.h"
 #include "../util/util.h"
 
-#define FOR_BMP_HEADER(FOR_FIELD) \
-        FOR_FIELD( uint16_t,bfType) \
-        FOR_FIELD( uint32_t,bfileSize) \
-        FOR_FIELD( uint32_t,bfReserved) \
-        FOR_FIELD( uint32_t,bOffBits) \
-        FOR_FIELD( uint32_t,biSize) \
-        FOR_FIELD( uint32_t,biWidth) \
-        FOR_FIELD( uint32_t,biHeight) \
-        FOR_FIELD( uint16_t,biPlanes) \
-        FOR_FIELD( uint16_t,biBitCount) \
-        FOR_FIELD( uint32_t,biCompression) \
-        FOR_FIELD( uint32_t,biSizeImage) \
-        FOR_FIELD( uint32_t,biXPelsPerMeter) \
-        FOR_FIELD( uint32_t,biYPelsPerMeter) \
-        FOR_FIELD( uint32_t,biClrUsed) \
-        FOR_FIELD( uint32_t,biClrImportant)
-
-#define DECLARE_FIELD(t, n) t n ;
-
-#pragma pack(push, 1)
-struct bmp_header {
-    FOR_BMP_HEADER(DECLARE_FIELD)
-};
-#pragma pack(pop)
-
-void bmp_header_print(struct bmp_header const *header, FILE *f);
-
-bool read_header_from_file(const char *filename, struct bmp_header *header);
-
 bool read_data_from_file(const char *filename, struct image *img);
 
 bool write_data_to_file(const char *filename, const struct image *img);

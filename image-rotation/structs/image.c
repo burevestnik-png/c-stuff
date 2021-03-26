@@ -1,7 +1,7 @@
 #include <malloc.h>
 #include "image.h"
 
-static struct image image_rotated_of(const struct image* img) {
+static struct image image_empty_rotated_of(const struct image* img) {
     return (struct image) {
         .width = img->height,
         .height = img->width,
@@ -15,12 +15,16 @@ void image_init(struct image* img, const uint64_t height, const uint64_t width) 
     img->data = malloc(sizeof(struct pixel) * height * width);
 }
 
-struct image image_rotate(const struct image source) {
-    struct image rotated_image = image_rotated_of(&source);
+static uint64_t calc_rotated_pixel_address(const struct image* source, uint64_t i, uint64_t j) {
+    return source->height - i - 1 + j * source->height;
+}
 
-    for (size_t i = 0; i < source.height; i++) {
-        for (size_t j = 0; j < source.width; j++) {
-            rotated_image.data[source.height - i - 1 + j * source.height] =
+struct image image_rotate(const struct image source) {
+    struct image rotated_image = image_empty_rotated_of(&source);
+
+    for (uint64_t i = 0; i < source.height; i++) {
+        for (uint64_t j = 0; j < source.width; j++) {
+            rotated_image.data[calc_rotated_pixel_address(&source, i, j)] =
                     source.data[i * source.width + j];
         }
     }
